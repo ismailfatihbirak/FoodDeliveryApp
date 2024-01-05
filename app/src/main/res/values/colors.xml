@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FBDE3F</color>
+    <color name="grimsi">#E5E5E5</color>
+    <color name="beyazanasayfa">#F2F2F2</color>
 </resources>
