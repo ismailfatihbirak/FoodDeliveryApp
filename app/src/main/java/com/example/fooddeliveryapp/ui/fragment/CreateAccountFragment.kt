@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.fooddeliveryapp.R
+import androidx.fragment.app.viewModels
 import com.example.fooddeliveryapp.databinding.FragmentCreateAccountBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 
 class CreateAccountFragment : Fragment() {
     private lateinit var binding: FragmentCreateAccountBinding
+    //private lateinit var viewModel: CreateAccountViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
 
@@ -18,5 +21,10 @@ class CreateAccountFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //val tempViewModel: CreateAccountViewModel by viewModels()
+        //viewModel = tempViewModel
+    }
 
 }
