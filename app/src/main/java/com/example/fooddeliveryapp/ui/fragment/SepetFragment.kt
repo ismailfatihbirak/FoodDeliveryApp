@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.data.model.Yemekler
 import com.example.fooddeliveryapp.databinding.FragmentSepetBinding
 import com.example.fooddeliveryapp.ui.adapter.SepetAdapter
@@ -21,6 +23,9 @@ class SepetFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSepetBinding.inflate(inflater, container, false)
 
+        binding.imageView14.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_sepetFragment_to_anasayfaFragment)
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         viewModel.sepetGetir("haypelet")
         viewModel.yemeklerListesi.observe(viewLifecycleOwner){

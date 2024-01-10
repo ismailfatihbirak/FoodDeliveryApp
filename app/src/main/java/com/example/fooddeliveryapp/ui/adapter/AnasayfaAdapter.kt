@@ -12,9 +12,12 @@ import com.example.fooddeliveryapp.data.model.Yemekler
 import com.example.fooddeliveryapp.databinding.CardviewBinding
 import com.example.fooddeliveryapp.ui.fragment.AnasayfaFragment
 import com.example.fooddeliveryapp.ui.fragment.AnasayfaFragmentDirections
+import com.example.fooddeliveryapp.ui.fragment.FavoriteFragment
+import com.example.fooddeliveryapp.ui.viewmodel.AnasayfaViewModel
 
-class AnasayfaAdapter(var mContext: Context,var resimListe:List<Yemekler>) :
+class AnasayfaAdapter(var mContext: Context,var resimListe:List<Yemekler>,var viewModel:AnasayfaViewModel) :
     RecyclerView.Adapter<AnasayfaAdapter.CardTasarimTutucu>() {
+
     inner class CardTasarimTutucu(var binding: CardviewBinding) : RecyclerView.ViewHolder(binding.root)
 
     fun setFilteredList(resimListe: List<Yemekler>){
@@ -28,18 +31,21 @@ class AnasayfaAdapter(var mContext: Context,var resimListe:List<Yemekler>) :
     override fun onBindViewHolder(holder: CardTasarimTutucu, position: Int) {
         val resim = resimListe.get(position)
         val t = holder.binding
+        var fav = false
 
         t.cc.setOnClickListener{
             val gecis = AnasayfaFragmentDirections.actionAnasayfaFragmentToDetayFragment(resim)
             Navigation.findNavController(it).navigate(gecis)
         }
         t.imageView24.setOnClickListener{
-            if (t.imageView24.drawable == ContextCompat.getDrawable(mContext, R.drawable.heart_dolu)) {
+            fav = !fav
+            if (fav == false){
                 t.imageView24.setImageResource(R.drawable.heart_bos)
-            } else {
+                viewModel.favSil(resim.yemek_id.toInt())
+            }
+            else{
                 t.imageView24.setImageResource(R.drawable.heart_dolu)
-                val gecis = AnasayfaFragmentDirections.actionAnasayfaFragmentToFavoriteFragment(resim)
-                Navigation.findNavController(it).navigate(gecis)
+                viewModel.favEkle(resim.yemek_adi,resim.yemek_fiyat,resim.yemek_id.toInt(),resim.yemek_resim_adi)
             }
         }
 

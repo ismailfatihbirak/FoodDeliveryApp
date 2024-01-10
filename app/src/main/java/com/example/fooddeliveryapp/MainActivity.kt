@@ -2,6 +2,7 @@ package com.example.fooddeliveryapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.fooddeliveryapp.databinding.ActivityMainBinding
@@ -15,8 +16,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        //NavigationUI.setupWithNavController(binding.bottomNavigationView,navHostFragment.navController)
 
     }
 }

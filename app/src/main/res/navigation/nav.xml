@@ -29,7 +29,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_anasayfaFragment"
-            app:destination="@id/anasayfaFragment" />
+            app:destination="@id/anasayfaFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/detayFragment"
@@ -40,17 +41,21 @@
             android:name="veri"
             app:argType="com.example.fooddeliveryapp.data.model.Yemekler" />
         <action
-            android:id="@+id/action_detayFragment_to_sepetFragment"
-            app:destination="@id/sepetFragment" />
+            android:id="@+id/action_detayFragment_to_anasayfaFragment"
+            app:destination="@id/anasayfaFragment"
+            app:popUpTo="@id/detayFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.fooddeliveryapp.ui.fragment.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
-        <argument
-            android:name="veriFavorite"
-            app:argType="com.example.fooddeliveryapp.data.model.Yemekler" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_anasayfaFragment"
+            app:destination="@id/anasayfaFragment"
+            app:popUpTo="@id/favoriteFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/anasayfaFragment"
@@ -66,10 +71,21 @@
         <action
             android:id="@+id/action_anasayfaFragment_to_sepetFragment"
             app:destination="@id/sepetFragment" />
+        <action
+            android:id="@+id/action_anasayfaFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/anasayfaFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/sepetFragment"
         android:name="com.example.fooddeliveryapp.ui.fragment.SepetFragment"
         android:label="fragment_sepet"
-        tools:layout="@layout/fragment_sepet" />
+        tools:layout="@layout/fragment_sepet" >
+        <action
+            android:id="@+id/action_sepetFragment_to_anasayfaFragment"
+            app:destination="@id/anasayfaFragment"
+            app:popUpTo="@id/sepetFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

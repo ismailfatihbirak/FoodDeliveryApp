@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.databinding.FragmentDetayBinding
 import com.example.fooddeliveryapp.ui.viewmodel.DetayViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +20,10 @@ class DetayFragment : Fragment() {
     private lateinit var viewModel: DetayViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentDetayBinding.inflate(inflater, container, false)
+
+        binding.imageView18.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_detayFragment_to_anasayfaFragment)
+        }
 
         val bundle:DetayFragmentArgs by navArgs()
         bundle.veri

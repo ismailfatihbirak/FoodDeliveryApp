@@ -28,8 +28,15 @@ class AnasayfaFragment : Fragment() {
 
         binding.recyclerView2.layoutManager = GridLayoutManager(requireContext(),2)
         viewModel.yemeklerListesi.observe(viewLifecycleOwner){
-            anasayfaAdapter = AnasayfaAdapter(requireContext(),it)
+            anasayfaAdapter = AnasayfaAdapter(requireContext(),it,viewModel)
             binding.recyclerView2.adapter = anasayfaAdapter
+
+            binding.imageView3.setOnClickListener {
+                Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_loginFragment)
+            }
+            binding.imageView27.setOnClickListener {
+                Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_favoriteFragment)
+            }
 
             binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
@@ -45,7 +52,7 @@ class AnasayfaFragment : Fragment() {
 
         }
 
-        binding.imageView9.setOnClickListener {
+        binding.floatingActionButton.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_sepetFragment)
         }
 
