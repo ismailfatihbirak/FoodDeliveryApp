@@ -48,6 +48,7 @@ class DetayFragment : Fragment() {
         }
         binding.button.setOnClickListener {
             viewModel.sepetEkle(bundle.veri.yemek_adi,bundle.veri.yemek_resim_adi,bundle.veri.yemek_fiyat,sayac.toString(),"haypelet")
+            Navigation.findNavController(it).navigate(R.id.action_detayFragment_to_sepetFragment)
         }
 
 

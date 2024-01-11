@@ -11,13 +11,15 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fooddeliveryapp.R
 import com.example.fooddeliveryapp.data.model.Yemekler
+import com.example.fooddeliveryapp.data.model.YemeklerSepet
 import com.example.fooddeliveryapp.databinding.FragmentSepetBinding
 import com.example.fooddeliveryapp.ui.adapter.SepetAdapter
+import com.example.fooddeliveryapp.ui.adapter.SepetItemClickListener
 import com.example.fooddeliveryapp.ui.viewmodel.SepetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SepetFragment : Fragment() {
+class SepetFragment : Fragment() , SepetItemClickListener {
     private lateinit var binding: FragmentSepetBinding
     private lateinit var viewModel: SepetViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,10 +30,21 @@ class SepetFragment : Fragment() {
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         viewModel.sepetGetir("haypelet")
-        viewModel.yemeklerListesi.observe(viewLifecycleOwner){
-            var sepetAdapter = SepetAdapter(requireContext(),it,viewModel)
+        viewModel.yemeklerListesi.observe(viewLifecycleOwner){a->
+            var sepetAdapter = SepetAdapter(requireContext(),a,viewModel,this)
             binding.recyclerView.adapter = sepetAdapter
+
+            var toplam = 0
+            var tutucu = 0
+            for (i in 0 until a.size) {
+                toplam = (a[i].yemek_siparis_adet) * a[i].yemek_fiyat
+                tutucu += toplam
+            }
+
+            binding.textView8.text = "${tutucu} ₺ "
         }
+
+
 
 
 
@@ -43,4 +56,24 @@ class SepetFragment : Fragment() {
         val tempViewModel: SepetViewModel by viewModels()
         viewModel = tempViewModel
     }
+    override fun onCounterChanged(position: Int, newCount: Int) {
+        viewModel.yemeklerListesi.value?.let { b ->
+            var tutucu = 0
+            for (i in 0 until b.size) {
+                val adet = b[i].yemek_siparis_adet ?: 0
+
+                if (i == position) {
+                    tutucu += newCount * (b[i].yemek_fiyat ?: 0)
+                } else {
+                    tutucu += adet * (b[i].yemek_fiyat ?: 0)
+                }
+            }
+            binding.textView8.text = "${tutucu} ₺ "
+        }
+    }
+
+
+
+
+
 }

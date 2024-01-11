@@ -45,6 +45,11 @@
             app:destination="@id/anasayfaFragment"
             app:popUpTo="@id/detayFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detayFragment_to_sepetFragment"
+            app:destination="@id/sepetFragment"
+            app:popUpTo="@id/detayFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"

@@ -2,6 +2,7 @@ package com.example.fooddeliveryapp.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.fooddeliveryapp.data.model.Yemekler
 import com.example.fooddeliveryapp.data.model.YemeklerSepet
 import com.example.fooddeliveryapp.data.repository.Repository
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SepetViewModel @Inject constructor(var frepo: Repository): ViewModel() {
     var yemeklerListesi = MutableLiveData<List<YemeklerSepet>>()
+
 
     init {
         sepetGetir("haypelet")
@@ -29,4 +31,8 @@ class SepetViewModel @Inject constructor(var frepo: Repository): ViewModel() {
             sepetGetir("haypelet")
         }
     }
+
+
+
+
 }

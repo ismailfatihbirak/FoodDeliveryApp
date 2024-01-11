@@ -11,7 +11,8 @@ import com.example.fooddeliveryapp.databinding.CardviewFavoriteBinding
 import com.example.fooddeliveryapp.databinding.CardviewSepetBinding
 import com.example.fooddeliveryapp.ui.viewmodel.SepetViewModel
 
-class SepetAdapter(var mContext: Context,var resimListeSepet:List<YemeklerSepet>,var viewModel:SepetViewModel):
+class SepetAdapter(var mContext: Context,var resimListeSepet:List<YemeklerSepet>,
+                   var viewModel:SepetViewModel,var clickListener: SepetItemClickListener):
     RecyclerView.Adapter<SepetAdapter.CardTasarimTutucuSepet>() {
 
     inner class CardTasarimTutucuSepet(var binding: CardviewSepetBinding):RecyclerView.ViewHolder(binding.root)
@@ -24,14 +25,34 @@ class SepetAdapter(var mContext: Context,var resimListeSepet:List<YemeklerSepet>
         val resim = resimListeSepet.get(position)
         val t = holder.binding
 
+        var sayac = resim.yemek_siparis_adet
+        t.textView11.text = sayac.toString()
+
+        t.imageView22.setOnClickListener {
+            sayac++
+            t.textView11.text = sayac.toString()
+            clickListener.onCounterChanged(holder.adapterPosition, sayac)
+        }
+
+        t.imageView23.setOnClickListener {
+            if (sayac == 1) {
+                viewModel.sepetSil(resim.sepet_yemek_id, "haypelet")
+            } else {
+                sayac--
+                t.textView11.text = sayac.toString()
+                clickListener.onCounterChanged(holder.adapterPosition, sayac)
+            }
+        }
+
+
         val url = "http://kasimadalan.pe.hu/yemekler/resimler/${resim.yemek_resim_adi}"
         Glide.with(mContext).load(url).override(300,300).into(t.imageView21)
 
         t.textView9.text = resim.yemek_adi
         t.textView10.text = "₺${resim.yemek_fiyat}"
-        var sayac = resim.yemek_siparis_adet
-        t.textView11.text = sayac.toString()
-        t.imageView22.setOnClickListener {
+
+
+        /*t.imageView22.setOnClickListener {
             sayac++
             t.textView11.text = sayac.toString()
         }
@@ -42,7 +63,7 @@ class SepetAdapter(var mContext: Context,var resimListeSepet:List<YemeklerSepet>
                 sayac--
                 t.textView11.text = sayac.toString()
             }
-        }
+        }*/
 
     }
     override fun getItemCount(): Int {

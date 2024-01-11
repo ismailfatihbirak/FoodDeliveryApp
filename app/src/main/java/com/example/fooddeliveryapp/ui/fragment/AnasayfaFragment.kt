@@ -10,13 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.fooddeliveryapp.R
+import com.example.fooddeliveryapp.data.model.FavoriYemekler
 import com.example.fooddeliveryapp.data.model.Yemekler
 import com.example.fooddeliveryapp.databinding.FragmentAnasayfaBinding
 import com.example.fooddeliveryapp.ui.adapter.AnasayfaAdapter
 import com.example.fooddeliveryapp.ui.viewmodel.AnasayfaViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
+
 import java.util.Locale
+
 
 @AndroidEntryPoint
 class AnasayfaFragment : Fragment() {
@@ -26,10 +28,17 @@ class AnasayfaFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAnasayfaBinding.inflate(inflater, container, false)
 
+
+
         binding.recyclerView2.layoutManager = GridLayoutManager(requireContext(),2)
         viewModel.yemeklerListesi.observe(viewLifecycleOwner){
-            anasayfaAdapter = AnasayfaAdapter(requireContext(),it,viewModel)
-            binding.recyclerView2.adapter = anasayfaAdapter
+
+            viewModel.favYemeklerListesi.observe(viewLifecycleOwner){a->
+                anasayfaAdapter = AnasayfaAdapter(requireContext(), it, viewModel, a)
+                binding.recyclerView2.adapter = anasayfaAdapter
+            }
+
+
 
             binding.imageView3.setOnClickListener {
                 Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_loginFragment)
@@ -64,6 +73,11 @@ class AnasayfaFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val tempViewModel: AnasayfaViewModel by viewModels()
         viewModel = tempViewModel
+    }
+
+    override fun onResume() {
+        viewModel.favYukle()
+        super.onResume()
     }
 
     fun filterList(query :String?,it:List<Yemekler>){
