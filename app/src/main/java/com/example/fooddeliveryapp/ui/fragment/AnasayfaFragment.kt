@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.example.fooddeliveryapp.data.model.Yemekler
 import com.example.fooddeliveryapp.databinding.FragmentAnasayfaBinding
 import com.example.fooddeliveryapp.ui.adapter.AnasayfaAdapter
 import com.example.fooddeliveryapp.ui.viewmodel.AnasayfaViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 import java.util.Locale
@@ -25,10 +27,18 @@ class AnasayfaFragment : Fragment() {
     private lateinit var binding: FragmentAnasayfaBinding
     private lateinit var viewModel: AnasayfaViewModel
     private lateinit var anasayfaAdapter:AnasayfaAdapter
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAnasayfaBinding.inflate(inflater, container, false)
 
-
+        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth.signOut()
+        val backPress = object :OnBackPressedCallback(enabled = true){
+            override fun handleOnBackPressed() {
+                Navigation.findNavController(requireView()).navigate(R.id.action_anasayfaFragment_to_girisFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,backPress)
 
         binding.recyclerView2.layoutManager = GridLayoutManager(requireContext(),2)
         viewModel.yemeklerListesi.observe(viewLifecycleOwner){
@@ -38,10 +48,8 @@ class AnasayfaFragment : Fragment() {
                 binding.recyclerView2.adapter = anasayfaAdapter
             }
 
-
-
             binding.imageView3.setOnClickListener {
-                Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_loginFragment)
+                Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_girisFragment)
             }
             binding.imageView27.setOnClickListener {
                 Navigation.findNavController(it).navigate(R.id.action_anasayfaFragment_to_favoriteFragment)
@@ -79,6 +87,8 @@ class AnasayfaFragment : Fragment() {
         viewModel.favYukle()
         super.onResume()
     }
+
+
 
     fun filterList(query :String?,it:List<Yemekler>){
         if (query != null){
