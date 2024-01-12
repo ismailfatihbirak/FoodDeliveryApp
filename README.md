@@ -1,10 +1,17 @@
 Food Delivery App
+
 *Kotlin
+
 *MVVM
+
 *Hilt Dependency Injection
+
 *Retrofit , coroutine
+
 *Room
+
 *Glide
+
 *Firebase Authentication
 
 
